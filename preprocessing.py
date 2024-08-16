@@ -52,11 +52,3 @@ class TextCleaner:
         
         return text
 
-# Example usage:
-currency_symbols = r'[$€£¥]'  # Define the regular expression for currency symbols
-text_cleaner = TextCleaner(currency_symbols)
-
-sample_text = "The price is $50 or €45, depending on the region. Check out our website <a href='link'>here</a>!"
-cleaned_text = text_cleaner.clean_text(sample_text)
-
-print(cleaned_text)
