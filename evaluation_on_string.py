@@ -15,8 +15,7 @@ df['clean_text'] = df['email'].apply(lambda x: text_cleaner.clean_text(x))
 vectorizer = CountVectorizer(max_features=10000)
 X = vectorizer.fit(df['clean_text'])
 
-currency_symbols = r'[\$\£\€\¥\₹\¢\₽\₩\₪]'  
-text_cleaner = TextCleaner(currency_symbols)
+
 clean_text = str(text_cleaner.clean_text(text))
 
 print(f"\nThe clean text is : {clean_text}")
