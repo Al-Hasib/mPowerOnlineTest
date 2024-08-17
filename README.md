@@ -22,12 +22,14 @@ pip install -r requirements.txt
 ```
 
 **Perform Training**
+
 After running, you will get the model saved in the current directory.
 ```python
 python train.py
 ```
 
 **Perform Evaluation**
+
 For getting the Output in the csv format for the text dataset, run the evalution file. It will generate the submission file.
 
 ```python
@@ -42,4 +44,4 @@ python inference.py
 
 As Machine Learning model, I get the highest result with Linear Support Vector Machine model. With GridSearchCV, The mean accuracy of the model is 99.04%. 
 
-##**Thanks**
+## **Thanks**
