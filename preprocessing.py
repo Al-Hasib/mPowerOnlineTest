@@ -4,6 +4,7 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
 class TextCleaner:
+    '''Class for cleaning Text'''
     def __init__(self, currency_symbols, stop_words=None, lemmatizer=None):
         self.currency_symbols = currency_symbols
         
@@ -17,37 +18,23 @@ class TextCleaner:
         else:
             self.lemmatizer = lemmatizer
     
+
+    # functions for removing punctuations
     def remove_punctuation(self,text):
         return text.translate(str.maketrans('', '', string.punctuation))
     
+
+    # Functions for cleaning text
     def clean_text(self, text):
         text = text.lower()
-        
-        # Replace all occurrences of currency symbols with the word 'currency'
         text = re.sub(self.currency_symbols, 'currency', text)
-        
-        # Remove punctuation
         text = self.remove_punctuation(text)
-        
-        # Remove HTML tags
         text = re.compile('<.*?>').sub('', text)
-        
-        # Remove underscores
         text = text.replace('_', '')
-        
-        # Remove remaining non-word characters
         text = re.sub(r'[^\w\s]', '', text)
-        
-        # Remove digits
         text = re.sub(r'\d', ' ', text)
-        
-        # Remove extra spaces
         text = re.sub(r'\s+', ' ', text).strip()
-        
-        # Remove stopwords
         text = ' '.join(word for word in text.split() if word not in self.stop_words)
-        
-        # Lemmatize the text
         text = ' '.join(self.lemmatizer.lemmatize(word) for word in text.split())
         
         return text

@@ -6,21 +6,21 @@ from preprocessing import *
 from sklearn.svm import LinearSVC
 import joblib
 
+# Load train file
 train_path = Path("./ML Engineer/train.csv")
 df = pd.read_csv(train_path)
 
+# convert the class attributes into number
 encoder = LabelEncoder()
-# Fit and transform the labels to numeric values
 df['target'] = encoder.fit_transform(df['class'])
 
+# clean the training text
 currency_symbols = r'[\$\£\€\¥\₹\¢\₽\₩\₪]'  
 text_cleaner = TextCleaner(currency_symbols)
-
 df['clean_text'] = df['email'].apply(lambda x: text_cleaner.clean_text(x))
-
 print(df.head())
 
-
+# TfIdfVectize the train data
 vectorizer = TfidfVectorizer(max_features=10000)
 X = vectorizer.fit_transform(df['clean_text'])
 y = df['target']
