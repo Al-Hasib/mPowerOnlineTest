@@ -1,8 +1,6 @@
 import pandas as pd
 from pathlib import Path
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.preprocessing import LabelEncoder
 from preprocessing import *
 import joblib
 
@@ -21,9 +19,8 @@ currency_symbols = r'[\$\£\€\¥\₹\¢\₽\₩\₪]'
 text_cleaner = TextCleaner(currency_symbols)
 train['clean_text'] = train['email'].apply(lambda x: text_cleaner.clean_text(x))
 
-vectorizer = CountVectorizer(max_features=10000)
+vectorizer = TfidfVectorizer(max_features=10000)
 X = vectorizer.fit(train['clean_text'])
-
 
 
 test['clean_text'] = test['email'].apply(lambda x: text_cleaner.clean_text(x))
@@ -44,6 +41,6 @@ submission_df['class'] = submission_df['class'].map({1: 'spam', 0: 'not_spam'})
 print(submission_df.head())
 
 # Save DataFrame to a CSV file
-submission_df.to_csv('submission_Md_Abdullah_Al_Hasib.csv', index=False)
+submission_df.to_csv('submission_md_abdullah_al_hasib.csv', index=False)
 
 print("Evaluation completed..")

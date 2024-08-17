@@ -1,10 +1,9 @@
 import pandas as pd
 from pathlib import Path
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder
 from preprocessing import *
+from sklearn.svm import LinearSVC
 import joblib
 
 train_path = Path("./ML Engineer/train.csv")
@@ -21,18 +20,19 @@ df['clean_text'] = df['email'].apply(lambda x: text_cleaner.clean_text(x))
 
 print(df.head())
 
-vectorizer = CountVectorizer(max_features=10000)
+
+vectorizer = TfidfVectorizer(max_features=10000)
 X = vectorizer.fit_transform(df['clean_text'])
 y = df['target']
 print(X.shape, y.shape)
 
 # Initialize the classifier
-lr_classifier = LogisticRegression()
+svm_classifier = LinearSVC(C= 1,max_iter=1000, tol=0.0001)
 
 # Train the model
-lr_classifier.fit(X, y)
-
-print("Training Completed")
+svm_classifier.fit(X, y)
 
 # Save the model to a file
-joblib.dump(lr_classifier, 'email_detection_model.pkl')
+joblib.dump(svm_classifier, 'email_detection_model.pkl')
+
+print("Training Completed")
